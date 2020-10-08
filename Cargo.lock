@@ -30,7 +30,7 @@ version = "0.4.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4fabed175da42fed1fa0746b0ea71f412aa9d35e76e95e59b192c64b9dc2bf8b"
 dependencies = [
-    "cfg-if",
+ "cfg-if",
 ]
 
 [[package]]
@@ -40,20 +40,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6eaab81f2b90c518541382de3e3a0689a0426d0798d0fdef56f3df69636e83dd"
 
 [[package]]
-name = "rlibc"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fc874b127765f014d792f16763a81245ab80500e2ad921ed4ee9e82481ee08fe"
-
-[[package]]
 name = "rust-efi-runtime-driver"
 version = "0.1.0"
 dependencies = [
-    "atomic_refcell",
-    "log",
-    "r-efi",
-    "rlibc",
-    "x86_64",
+ "atomic_refcell",
+ "log",
+ "r-efi",
+ "x86_64",
 ]
 
 [[package]]
@@ -62,6 +55,6 @@ version = "0.12.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d5b4b42dbabe13b69023e1a1407d395f1a1a33df76e9a9efdbe303acc907e292"
 dependencies = [
-    "bit_field",
-    "bitflags",
+ "bit_field",
+ "bitflags",
 ]

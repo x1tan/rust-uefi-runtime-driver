@@ -4,8 +4,6 @@
 #![feature(lang_items)]
 #![feature(panic_info_message)]
 
-extern crate rlibc;
-
 #[macro_use]
 mod logger;
 mod utils;

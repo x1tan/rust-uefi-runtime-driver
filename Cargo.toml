@@ -20,8 +20,6 @@ repository = "https://github.com/x1tan/rust-efi-runtime-driver"
 
 
 [dependencies]
-rlibc = "1"
-
 r-efi = "3.1.0"
 log = { version = "0.4.11", default-features = false }
 x86_64 = "0.12.2"
