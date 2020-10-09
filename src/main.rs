@@ -11,7 +11,6 @@ mod utils;
 use core::borrow::BorrowMut;
 use core::mem::MaybeUninit;
 
-use log::{error, info};
 use r_efi::*;
 
 static mut SYSTEM_TABLE: MaybeUninit<efi::SystemTable> = MaybeUninit::uninit();
@@ -48,19 +47,15 @@ fn efi_main(_image_handle: efi::Handle, raw_system_table: *mut efi::SystemTable)
 
     unsafe { SYSTEM_TABLE = MaybeUninit::new(raw_system_table.read()) };
 
-    // Setup the serial port logger.
-    logger::Logger::initialize();
-
     // Register to events relevant for runtime drivers.
-    let mut event: base::Event = core::ptr::null_mut();
-
+    let mut event_virtual_address: base::Event = core::ptr::null_mut();
     let mut status = (boot_services().create_event_ex)(
         efi::EVT_NOTIFY_SIGNAL,
         efi::TPL_CALLBACK,
         handle_set_virtual_address_map,
-        runtime_services().borrow_mut() as *mut _ as *mut core::ffi::c_void,
+        runtime_services() as *const _ as *mut core::ffi::c_void,
         &efi::EVENT_GROUP_VIRTUAL_ADDRESS_CHANGE,
-        event.borrow_mut(),
+        event_virtual_address.borrow_mut(),
     );
 
     if status.is_error() {
@@ -71,13 +66,14 @@ fn efi_main(_image_handle: efi::Handle, raw_system_table: *mut efi::SystemTable)
         return status;
     }
 
+    let mut event_boot_services: base::Event = core::ptr::null_mut();
     status = (boot_services().create_event_ex)(
         efi::EVT_NOTIFY_SIGNAL,
         efi::TPL_CALLBACK,
         handle_exit_boot_services,
-        runtime_services().borrow_mut() as *mut _ as *mut core::ffi::c_void,
+        runtime_services() as *const _ as *mut core::ffi::c_void,
         &efi::EVENT_GROUP_EXIT_BOOT_SERVICES,
-        event.borrow_mut(),
+        event_boot_services.borrow_mut(),
     );
 
     if status.is_error() {
@@ -87,6 +83,11 @@ fn efi_main(_image_handle: efi::Handle, raw_system_table: *mut efi::SystemTable)
         );
         return status;
     }
+
+    // Your runtime driver initialization. If the initialization fails, manually close the previously
+    // created events with:
+    // (boot_services().close_event)(event_virtual_address);
+    // (boot_services().close_event)(event_boot_services);
 
     info!("[~] EFI runtime driver has been loaded and initialized.");
 

@@ -19,21 +19,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf1de2fe8c75bc145a2f577add951f8134889b4795d47466a54a5c846d691693"
 
 [[package]]
-name = "cfg-if"
-version = "0.1.10"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4785bdd1c96b2a846b2bd7cc02e86b6b3dbf14e7e53446c4f54c92a361040822"
-
-[[package]]
-name = "log"
-version = "0.4.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4fabed175da42fed1fa0746b0ea71f412aa9d35e76e95e59b192c64b9dc2bf8b"
-dependencies = [
- "cfg-if",
-]
-
-[[package]]
 name = "r-efi"
 version = "3.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -44,7 +29,6 @@ name = "rust-efi-runtime-driver"
 version = "0.1.0"
 dependencies = [
  "atomic_refcell",
- "log",
  "r-efi",
  "x86_64",
 ]

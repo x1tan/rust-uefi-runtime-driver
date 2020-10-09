@@ -1,4 +1,4 @@
-use log::error;
+use crate::error;
 
 static mut GDB_ATTACHED: bool = false;
 
